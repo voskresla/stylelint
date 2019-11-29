@@ -39,7 +39,7 @@
     "jest": "jest",
     "lint": "npm-run-all --parallel lint:*",
     "lint:formatting": "prettier . --check",
-    "lint:js": "eslint . --cache --max-warnings=0",
+    "lint:js": "xo",
     "lint:md": "remark . --quiet --frail",
     "lint:types": "tsc",
     "release": "np",
@@ -56,16 +56,62 @@
     "*.js": "eslint --cache --fix",
     "*.{js,json,md,ts,yml}": "prettier --write"
   },
-  "prettier": "@stylelint/prettier-config",
-  "eslintConfig": {
-    "extends": [
-      "stylelint"
+  "xo": {
+    "envs": [
+      "jest",
+      "node"
     ],
-    "globals": {
-      "testRule": true
-    },
-    "root": true
+    "globals": [
+      "testRule"
+    ],
+    "ignores": [
+      "lib/utils/parseCalcExpression/parser.js"
+    ],
+    "overrides": [
+      {
+        "files": "**/__tests__/*.js",
+        "rules": {
+          "no-template-curly-in-string": "off",
+          "no-useless-concat": "off"
+        }
+      }
+    ],
+    "prettier": true,
+    "root": true,
+    "rules": {
+      "camelcase": "off",
+      "capitalized-comments": "off",
+      "complexity": "off",
+      "default-case": "off",
+      "func-names": "off",
+      "max-params": "off",
+      "no-mixed-spaces-and-tabs": "off",
+      "no-negated-condition": "off",
+      "no-shadow": "error",
+      "no-return-assign": "off",
+      "no-warning-comments": "off",
+      "object-curly-spacing": [
+        "off",
+        "always"
+      ],
+      "prefer-destructuring": "off",
+      "promise/prefer-await-to-then": "off",
+      "spaced-comment": "off",
+      "unicorn/better-regex": "off",
+      "unicorn/catch-error-name": "off",
+      "unicorn/explicit-length-check": "off",
+      "unicorn/filename-case": "off",
+      "unicorn/no-fn-reference-in-iterator": "off",
+      "unicorn/no-for-loop": "off",
+      "unicorn/no-reduce": "off",
+      "unicorn/no-zero-fractions": "off",
+      "unicorn/prefer-reflect-apply": "off",
+      "unicorn/prefer-string-slice": "off",
+      "unicorn/prevent-abbreviations": "off",
+      "unicorn/string-content": "off"
+    }
   },
+  "prettier": "@stylelint/prettier-config",
   "remarkConfig": {
     "plugins": [
       "@stylelint/remark-preset"
@@ -180,8 +226,6 @@
     "benchmark": "^2.1.4",
     "common-tags": "^1.8.0",
     "del": "^6.0.0",
-    "eslint": "^7.13.0",
-    "eslint-config-stylelint": "^13.0.0",
     "got": "^11.8.0",
     "husky": "^4.3.0",
     "jest": "^26.6.3",
@@ -194,7 +238,8 @@
     "postcss-import": "^12.0.1",
     "prettier": "^2.1.2",
     "remark-cli": "^9.0.0",
-    "typescript": "^4.0.5"
+    "typescript": "^4.0.5",
+    "xo": "^0.35.0"
   },
   "engines": {
     "node": ">=10.13.0"
