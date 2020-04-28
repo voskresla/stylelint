@@ -35,6 +35,9 @@
   ],
   "scripts": {
     "benchmark-rule": "node scripts/benchmark-rule.js",
+    "bundle": "npm run bundle:node && npm run bundle:browser",
+    "bundle:browser": "browserify dist/index.js -o dist/browser.js --standalone stylelint --external cosmiconfig --external globby --external pico-match --external glob --external minimatch --external micromatch --external debug --external ignore --external rimraf --external file-entry-cache --external flat-cache --external ini --external imurmurhash --external iseve",
+    "bundle:node": "npx @zeit/ncc build lib/index.js -o dist --stats-out dist/stats.json --external cosmiconfig --external globby --external pico-match --external glob --external minimatch --external micromatch --external debug --external ignore --external rimraf --external file-entry-cache --external flat-cache --external ini --external imurmurhash --external iseve",
     "format": "prettier . --write",
     "jest": "jest",
     "lint": "npm-run-all --parallel lint:*",
@@ -110,6 +113,7 @@
     "@stylelint/postcss-markdown": "^0.36.1",
     "autoprefixer": "^9.7.6",
     "balanced-match": "^1.0.0",
+    "browserify": "^16.5.1",
     "chalk": "^4.0.0",
     "cosmiconfig": "^6.0.0",
     "debug": "^4.1.1",
