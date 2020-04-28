@@ -1,6 +1,6 @@
 'use strict';
 
-const stylelint = require('./lib/index.js');
+const stylelint = require('./dist/index.js');
 
 stylelint
 	.lint({

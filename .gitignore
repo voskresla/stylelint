@@ -1,6 +1,8 @@
-dist
+dist/*
 node_modules
 *.log
 .coverage
 .eslintcache
 yarn.lock
+
+!dist/index.html
