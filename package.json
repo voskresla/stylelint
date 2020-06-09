@@ -168,6 +168,7 @@
     "@types/globjoin": "^0.1.0",
     "@types/lodash": "^4.14.155",
     "@types/micromatch": "^4.0.1",
+    "@zeit/ncc": "^0.22.3",
     "benchmark": "^2.1.4",
     "common-tags": "^1.8.0",
     "del": "^5.1.0",

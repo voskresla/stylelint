@@ -1,5 +1,6 @@
 .coverage
 .vscode
+dist
 **/fixtures/**/*.css
 **/fixtures/**/*.pcss
 **/fixtures/**/*.postcss

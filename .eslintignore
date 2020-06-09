@@ -1,4 +1,5 @@
 .coverage
+dist
 lib/vendor
 lib/utils/parseCalcExpression/parser.js
 
