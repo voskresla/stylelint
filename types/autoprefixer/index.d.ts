@@ -1,7 +1,7 @@
 declare module 'autoprefixer/lib/browsers' {
-	import browserslist from 'browserslist';
+	import browserslist, { Stats } from 'browserslist';
 
-	type Queries = string | ReadonlyArray<string>;
+	type Queries = string | readonly string[];
 
 	interface Browsers {
 		parse(queries: Queries): string[];
@@ -10,11 +10,11 @@ declare module 'autoprefixer/lib/browsers' {
 	}
 
 	class BrowsersImpl implements Browsers {
-		constructor(data: { [k: string]: any }, options?: any, browserslistOpts?: browserslist.Options);
+		constructor(data: Record<string, any>, options?: any, browserslistOpts?: browserslist.Options);
 
 		isSelected(browser: string): boolean;
 
-		parse(queries: string | ReadonlyArray<string>): string[];
+		parse(queries: string | readonly string[]): string[];
 
 		prefix(browser: string): string;
 
@@ -30,7 +30,7 @@ declare module 'autoprefixer/lib/prefixes' {
 	import Browsers from 'autoprefixer/lib/browsers';
 
 	interface Prefixes {
-		remove: { [k: string]: any };
+		remove: Record<string, any>;
 
 		unprefixed(value: string): string;
 	}
@@ -38,7 +38,7 @@ declare module 'autoprefixer/lib/prefixes' {
 	class PrefixesImpl implements Prefixes {
 		constructor(data: string[], browsers: Browsers, options?: any);
 
-		remove: { [p: string]: any };
+		remove: Record<string, any>;
 
 		unprefixed(value: string): string;
 	}
@@ -57,8 +57,8 @@ declare module 'autoprefixer/lib/prefixes' {
 
 declare module 'autoprefixer' {
 	import { Plugin } from 'postcss';
-	import { Stats } from 'browserslist';
-	type BrowserslistTarget = string | string[] | { [key: string]: string[] };
+
+	type BrowserslistTarget = string | string[] | Record<string, string[]>;
 
 	interface Options {
 		env?: string;

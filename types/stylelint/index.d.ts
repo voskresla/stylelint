@@ -1,29 +1,25 @@
 declare module 'stylelint' {
 	import { Comment, Result, ResultMessage, Root, Syntax, WarningOptions, Warning } from 'postcss';
 
-	export type StylelintConfigExtends = string | Array<string>;
-	export type StylelintConfigPlugins = string | Array<string>;
-	export type StylelintConfigProcessor = string | [string, Object];
-	export type StylelintConfigProcessors = string | Array<StylelintConfigProcessor>;
-	export type StylelintConfigIgnoreFiles = string | Array<string>;
-	export type StylelintConfigRuleSettings = any | [any, Object];
-	export type StylelintConfigRules = {
-		[ruleName: string]: StylelintConfigRuleSettings;
-	};
+	export type StylelintConfigExtends = string | string[];
+	export type StylelintConfigPlugins = string | string[];
+	export type StylelintConfigProcessor = string | [string, Record<string, unknown>];
+	export type StylelintConfigProcessors = string | StylelintConfigProcessor[];
+	export type StylelintConfigIgnoreFiles = string | string[];
+	export type StylelintConfigRuleSettings = any | [any, Record<string, unknown>];
+	export type StylelintConfigRules = Record<string, StylelintConfigRuleSettings>;
 
 	export type StylelintConfig = {
 		extends?: StylelintConfigExtends;
 		plugins?: StylelintConfigPlugins;
-		pluginFunctions?: {
-			[pluginName: string]: Function;
-		};
+		pluginFunctions?: Record<string, Function>;
 		processors?: StylelintConfigProcessors;
-		processorFunctions?: Array<Function>;
+		processorFunctions?: Function[];
 		ignoreFiles?: StylelintConfigIgnoreFiles;
 		ignorePatterns?: string;
 		rules?: StylelintConfigRules;
-		codeProcessors?: Array<Function>;
-		resultProcessors?: Array<Function>;
+		codeProcessors?: Function[];
+		resultProcessors?: Function[];
 		quiet?: boolean;
 		defaultSeverity?: string;
 	};
@@ -40,15 +36,13 @@ declare module 'stylelint' {
 		description?: string;
 	};
 
-	export type DisabledRangeObject = {
-		[ruleName: string]: Array<DisabledRange>;
-	};
+	export type DisabledRangeObject = Record<string, DisabledRange[]>;
 
 	export type DisabledWarning = { line: number; rule: string };
 
 	export type StylelintPostcssResult = {
-		ruleSeverities: { [k: string]: any };
-		customMessages: { [k: string]: any };
+		ruleSeverities: Record<string, any>;
+		customMessages: Record<string, any>;
 		quiet?: boolean;
 		disabledRanges: DisabledRangeObject;
 		disabledWarnings?: DisabledWarning[];
@@ -87,7 +81,7 @@ declare module 'stylelint' {
 	};
 
 	export type Formatter = (
-		results: Array<StylelintResult>,
+		results: StylelintResult[],
 		returnValue?: StylelintStandaloneReturnValue,
 	) => string;
 
@@ -99,7 +93,7 @@ declare module 'stylelint' {
 		config?: StylelintConfig;
 		configFile?: string;
 		configBasedir?: string;
-		configOverrides?: Object;
+		configOverrides?: Record<string, unknown>;
 		ignoreDisables?: boolean;
 		ignorePath?: string;
 		reportInvalidScopeDisables?: boolean;
@@ -114,7 +108,7 @@ declare module 'stylelint' {
 
 	export type StylelintRule = (
 		primaryOption: any,
-		secondaryOptions: object,
+		secondaryOptions: Record<string, unknown>,
 		context: StylelintPluginContext,
 	) => (root: Root, result: PostcssResult) => Promise<void> | void;
 
@@ -122,7 +116,7 @@ declare module 'stylelint' {
 		code?: string;
 		codeFilename?: string;
 		filePath?: string;
-		codeProcessors?: Array<Function>;
+		codeProcessors?: Function[];
 		syntax?: string;
 		customSyntax?: CustomSyntax;
 	};
@@ -139,8 +133,8 @@ declare module 'stylelint' {
 			search: (s: string) => Promise<null | CosmiconfigResult>;
 			load: (s: string) => Promise<null | CosmiconfigResult>;
 		};
-		_configCache: Map<string, Object>;
-		_specifiedConfigCache: Map<StylelintConfig, Object>;
+		_configCache: Map<string, Record<string, unknown>>;
+		_specifiedConfigCache: Map<StylelintConfig, Record<string, unknown>>;
 		_postcssResultCache: Map<string, Result>;
 
 		_getPostcssResult: (options?: GetPostcssOptions) => Promise<Result>;
@@ -154,8 +148,8 @@ declare module 'stylelint' {
 	};
 
 	export type StylelintStandaloneOptions = {
-		files?: string | Array<string>;
-		globbyOptions?: Object;
+		files?: string | string[];
+		globbyOptions?: Record<string, unknown>;
 		cache?: boolean;
 		cacheLocation?: string;
 		code?: string;
@@ -163,7 +157,7 @@ declare module 'stylelint' {
 		config?: StylelintConfig;
 		configFile?: string;
 		configBasedir?: string;
-		configOverrides?: Object;
+		configOverrides?: Record<string, unknown>;
 		printConfig?: string;
 		ignoreDisables?: boolean;
 		ignorePath?: string;
@@ -216,7 +210,7 @@ declare module 'stylelint' {
 		}>;
 		parseErrors: Array<Warning & { stylelintType: string }>;
 		errored?: boolean;
-		warnings: Array<StylelintWarning>;
+		warnings: StylelintWarning[];
 		ignored?: boolean;
 		_postcssResult?: PostcssResult;
 	};
@@ -236,11 +230,11 @@ declare module 'stylelint' {
 
 	export type StylelintDisableReportEntry = {
 		source?: string;
-		ranges: Array<DisableReportRange>;
+		ranges: DisableReportRange[];
 	};
 
 	export type StylelintStandaloneReturnValue = {
-		results: Array<StylelintResult>;
+		results: StylelintResult[];
 		errored: boolean;
 		output: any;
 		maxWarningsExceeded?: {
@@ -255,8 +249,8 @@ declare module 'stylelint' {
 
 	export type StylelintPublicAPI = {
 		lint: Function;
-		rules: { [k: string]: StylelintRule };
-		formatters: { [k: string]: Formatter };
+		rules: Record<string, StylelintRule>;
+		formatters: Record<string, Formatter>;
 		createPlugin: (
 			ruleName: string,
 			rule: StylelintRule,
@@ -270,5 +264,5 @@ declare module 'stylelint' {
 		};
 	};
 
-	export type StylelintDisableOptionsReport = Array<StylelintDisableReportEntry>;
+	export type StylelintDisableOptionsReport = StylelintDisableReportEntry[];
 }
