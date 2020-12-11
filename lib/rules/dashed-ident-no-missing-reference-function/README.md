@@ -1,4 +1,4 @@
-# dash-ident-no-missing-reference-function
+# dashed-ident-no-missing-reference-function
 
 Disallow missing reference functions for dashed-idents.
 
