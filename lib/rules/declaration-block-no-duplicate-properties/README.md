@@ -10,6 +10,7 @@ a { color: pink; color: orange; }
 ```
 
 This rule ignores variables (`$sass`, `@less`, `--custom-property`).
+You can allow `--custom-properties` with secondary options `lookAtCustomProperties: true`.
 
 ## Options
 
@@ -140,4 +141,30 @@ a { color: pink; color: orange; background-color: orange; background-color: whit
 <!-- prettier-ignore -->
 ```css
 a { color: pink; background-color: orange; color: orange; background-color: white; }
+```
+
+### `lookAtCustomProperties: true`
+
+Allow check for CSS custom-properties.
+
+Usefull for theming custom-properties in one file.
+
+The following patterns are considered violations:
+
+<!-- prettier-ignore -->
+```css
+:root {
+  --colorBrandAction: red;
+  --colorBrandAction: blue;
+}
+```
+
+The following patterns are _not_ considered violations:
+
+<!-- prettier-ignore -->
+```css
+:root {
+  --colorBrandAction: red;
+  --colorBrandMain: blue;
+}
 ```
